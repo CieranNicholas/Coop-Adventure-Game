@@ -4,7 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
+#include "Transporter.h"
 #include "PressurePlate.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPressurePlateOnActivated);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPressurePlateOnDeactivated);
 
 UCLASS()
 class COOPADVENTURE_API APressurePlate : public AActor
@@ -23,4 +28,24 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	USceneComponent* RootComp;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UStaticMeshComponent* TriggerMesh;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	bool bIsActivated;
+
+	UPROPERTY(BlueprintAssignable)
+	FPressurePlateOnActivated OnActivated;
+
+	UPROPERTY(BlueprintAssignable)
+	FPressurePlateOnDeactivated OnDeactivated;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UTransporter* Transporter;
 };
